@@ -39,23 +39,46 @@
 
 
 
-        <h2>คลังข้อสอบ</h2>
+        <h2 align="center">คลังข้อสอบ</h2>
         @if(\Session::has('success'))
             <div class="alert alert-success">
                 <p>{{ \Session::get('success') }}</p>
             </div>
         @endif
-        <select   name="categories" required id="cate1" >
-                    <option  value="0">----------กรุณาเลือกหมวดหมู่----------</option>
-                    @foreach($list as $row)
+        <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4" >
+                <div class="form-group">
+                        <select name="filter_topic" id="filter_topic" class="form-control" style="height:30px;" required>
+                            <option value="">---------------------เลือกหมวดหมู่---------------------</option>
+                            @foreach($cate as $row)
 
-                    @if($row['status']==1)
-                    <option  value="{{$row['id']}}">{{$row['topic']}}</option>
-                    @endif
+                        @if($row['status']==1)
+                     <option  value="{{$row['topic']}}">{{$row['topic']}}</option>
+                        @endif
 
-                    @endforeach
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="filter_degree" id="filter_degree" class="form-control" style="height:30px;" required>
+                            <option value="all">-------------------เลือกระดับความยาก-------------------</option>
+                            <option value="ง่าย">ง่าย</option>
+                            <option value="ปานกลาง">ปานกลาง</option>
+                            <option value="ยาก">ยาก</option>
+                        </select>
+                    </div>
 
-                </select>
+
+                    <div class="form-group" align="center">
+                        <button type="button" name="filter" id="filter" class="btn btn-info">ค้นหา</button>
+
+                        <button type="button" name="reset" id="reset" class="btn btn-default">รีเซ็ต</button>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
 
 
         <table class="table table-bordered table-striped" id="table">
@@ -132,17 +155,26 @@
 <footer></footer>
 <script>
 
-$('#cate1').change(function() {
+// $('#cate1').change(function() {
 
 
 
-});
+// });
 
-    $(function () {
+
+    $(document).ready(function () {
+
+        fill_datatable();
+        function fill_datatable(filter_degree = '', filter_topic = '')
+    {
+
         $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ url('data/store') }}',
+            ajax:{
+                url: "{{ url('data/store') }}",
+                data:{filter_degree:filter_degree, filter_topic:filter_topic}
+            },
             columns: [{
                     data: 'name_cate',
                     name: 'name_cate'
@@ -184,13 +216,34 @@ $('#cate1').change(function() {
 
             ]
         });
+    }
+
+
+    $('#filter').click(function(){
+        var filter_degree = $('#filter_degree').val();
+        var filter_topic = $('#filter_topic').val();
+
+        if(filter_degree != '' &&  filter_degree != '')
+        {
+
+            $('#table').DataTable().destroy();
+            fill_datatable(filter_degree, filter_topic);
+        }
+        else
+        {
+            alert('Select Both filter option');
+        }
     });
 
-</script>
+    $('#reset').click(function(){
+        $('#filter_degree').val('');
+        $('#filter_topic').val('');
+        $('#table').DataTable().destroy();
+        fill_datatable();
+    });
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
+
         $('.delete_form').on('submit', function () {
             if (confirm("คุณต้องการลบข้อมูลหรือไม่ ?")) {
                 return true;

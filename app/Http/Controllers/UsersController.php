@@ -80,12 +80,12 @@ class UsersController extends Controller
                     'prepare' => 'required',
                     'str' => 'required',
                 ]);
-                error_log($request->get('create_question'));
+
                 $id = $request->get('id');
                 if (User::find($id)) {
                     return redirect()->route('user.create')->with('error', "มีบัญชีผู้ใช้งานนี้แล้ว");
                 } else {
-                    error_log($request->get('create_question'));
+
                     $eng = $json_data['userInfo']['firstname_en'] . "  " . $json_data['userInfo']['lastname_en'];
                     $users = new User(
                         [

@@ -117,7 +117,7 @@ echo "<script type='text/javascript'> window.alert('$mas');</script>"; ?>
     @endif
 
     <br>
-
+    <h1 align="center">ค้นหาชุดข้อสอบ</h1>
     <div class="row">
             <div class="col-md-12 m-0 p-0" >
             <br>
@@ -125,7 +125,7 @@ echo "<script type='text/javascript'> window.alert('$mas');</script>"; ?>
             <form   method="post"  action="{{url('takeexam/run')}}" >
       {{csrf_field()}}
       <div class="search-box">
-<input type="search" name="test" placeholder="กรอกรหัสชุดข้อสอบ...s">
+<input type="search" name="test" placeholder="กรอกรหัสชุดข้อสอบ...">
 <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
 </div>
 <!-- <div class="float-center">

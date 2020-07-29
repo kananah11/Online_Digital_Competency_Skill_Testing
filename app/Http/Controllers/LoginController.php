@@ -62,7 +62,7 @@ class LoginController extends Controller
                     //ก็ให้มันไปหา id user ใน database ว่ามีไหม
                     $users = User::find($id); //ถ้ามีก็ให้ users เก็บข้อมูลไอดีนั้นแล้วก็ส่งไปหน้าต่อไป
                     Session::put('userID', $id);
-                    error_log(Session::get('userID'));
+
                     $before = DB::table('user_exam_sets')->where('user_id', $id)->orderBy('startdatetime', 'DESC')->get();
                     $ex = ExamSet::all()->toArray();
                     return view('takeexam.index', compact('users', 'id', 'var', 'before', 'ex'));
@@ -121,10 +121,10 @@ class LoginController extends Controller
     }
 
     // Login สำเร็จ
-    public function successlogin()
-    {
-        return view('takeexam.index');
-    }
+    // public function successlogin()
+    // {
+    //     return view('takeexam.index');
+    // }
 
     public function logout()
     {

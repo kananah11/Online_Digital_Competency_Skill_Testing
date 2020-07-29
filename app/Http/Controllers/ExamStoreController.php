@@ -127,33 +127,78 @@ class ExamStoreController extends Controller
         return redirect()->route('store.index')->with('success', 'ลบข้อมูลเรียบร้อย');
     }
 
-    public function view()
+    public function view(Request $request)
     {
-        $examinations = examination::select(['id', 'questuion', 'choice1', 'choice2', 'choice3', 'choice4', 'answer', 'degree', 'status', 'created_at', 'updated_at', 'cate_id', 'name_cate', 'count', 'correct', 'incorrect'])->where('status', 'อนุมัติ');
 
-        return Datatables::of($examinations)
-            ->addColumn('action', function ($examinations) {
-                return '<a href="' . action('ExamStoreController@show', $examinations->id) . '" class="btn btn btn-success"><i class="glyphicon glyphicon-search"></i> เรียกดู</a>';
-            })
+        if (request()->ajax()) {
 
-            ->editColumn('delete', function ($examinations) {
-                return '<form method="post" class="delete_form" action="' . action('ExamStoreController@destroy', $examinations->id) . '">
+            if (!empty($request->filter_degree) && 'all' != $request->filter_degree) {
+
+                error_log('a');
+                $examinations = examination::select(['id', 'questuion', 'choice1', 'choice2', 'choice3', 'choice4', 'answer', 'degree', 'status', 'created_at', 'updated_at', 'cate_id', 'name_cate', 'count', 'correct', 'incorrect'])
+                    ->where('status', 'อนุมัติ')
+                    ->where('degree', $request->filter_degree)
+                    ->where('name_cate', $request->filter_topic);
+            } elseif (!empty($request->filter_degree) && 'all' == $request->filter_degree) {
+                $examinations = examination::select(['id', 'questuion', 'choice1', 'choice2', 'choice3', 'choice4', 'answer', 'degree', 'status', 'created_at', 'updated_at', 'cate_id', 'name_cate', 'count', 'correct', 'incorrect'])
+                    ->where('status', 'อนุมัติ')
+                    ->where('name_cate', $request->filter_topic);
+
+            } else {
+                error_log('b');
+                $examinations = examination::select(['id', 'questuion', 'choice1', 'choice2', 'choice3', 'choice4', 'answer', 'degree', 'status', 'created_at', 'updated_at', 'cate_id', 'name_cate', 'count', 'correct', 'incorrect'])->where('status', 'อนุมัติ');
+            }
+            error_log('c');
+            return Datatables::of($examinations)
+                ->addColumn('action', function ($examinations) {
+                    return '<a href="' . action('ExamStoreController@show', $examinations->id) . '" class="btn btn btn-success"><i class="glyphicon glyphicon-search"></i> เรียกดู</a>';
+                })
+
+                ->editColumn('delete', function ($examinations) {
+                    return '<form method="post" class="delete_form" action="' . action('ExamStoreController@destroy', $examinations->id) . '">
        ' . csrf_field() . '
            <input type="hidden" name="_method" value="DELETE"/>
            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> ลบ</button>
        </form>';
-            })
+                })
 
-            ->editColumn('updated_at', function ($user) {
-                return $user->updated_at->format('d/m/Y');
-            })
-            ->filterColumn('updated_at', function ($query, $keyword) {
-                $query->whereRaw("DATE_FORMAT(updated_at,'%Y/%m/%d') like ?", ["%$keyword%"]);
-            })
+                ->editColumn('updated_at', function ($user) {
+                    return $user->updated_at->format('d/m/Y');
+                })
+                ->filterColumn('updated_at', function ($query, $keyword) {
+                    $query->whereRaw("DATE_FORMAT(updated_at,'%Y/%m/%d') like ?", ["%$keyword%"]);
+                })
 
-            ->rawColumns(['delete' => 'delete', 'action' => 'action'])
+                ->rawColumns(['delete' => 'delete', 'action' => 'action'])
 
-            ->make(true);
+                ->make(true);
+        }
+
+        //     $examinations = examination::select(['id', 'questuion', 'choice1', 'choice2', 'choice3', 'choice4', 'answer', 'degree', 'status', 'created_at', 'updated_at', 'cate_id', 'name_cate', 'count', 'correct', 'incorrect'])->where('status', 'อนุมัติ');
+
+        //     return Datatables::of($examinations)
+        //         ->addColumn('action', function ($examinations) {
+        //             return '<a href="' . action('ExamStoreController@show', $examinations->id) . '" class="btn btn btn-success"><i class="glyphicon glyphicon-search"></i> เรียกดู</a>';
+        //         })
+
+        //         ->editColumn('delete', function ($examinations) {
+        //             return '<form method="post" class="delete_form" action="' . action('ExamStoreController@destroy', $examinations->id) . '">
+        //    ' . csrf_field() . '
+        //        <input type="hidden" name="_method" value="DELETE"/>
+        //        <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> ลบ</button>
+        //    </form>';
+        //         })
+
+        //         ->editColumn('updated_at', function ($user) {
+        //             return $user->updated_at->format('d/m/Y');
+        //         })
+        //         ->filterColumn('updated_at', function ($query, $keyword) {
+        //             $query->whereRaw("DATE_FORMAT(updated_at,'%Y/%m/%d') like ?", ["%$keyword%"]);
+        //         })
+
+        //         ->rawColumns(['delete' => 'delete', 'action' => 'action'])
+
+        //         ->make(true);
     }
     public function display()
     {

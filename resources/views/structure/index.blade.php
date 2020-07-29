@@ -58,13 +58,8 @@ $(function () {
           {data: 'delete', name: 'delete', orderable: false, searchable: false},
       ]
   });
-});
-</script>
 
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.delete_form').on('submit', function () {
+  $('.delete_form').on('submit', function () {
             if (confirm("คุณต้องการลบข้อมูลหรือไม่ ?")) {
                 return true;
             }
@@ -72,7 +67,10 @@ $(function () {
                 return false;
             }
         });
-    });
+
+});
+
+
 
 
 
@@ -83,8 +81,9 @@ $(function () {
         });
     }, 2000);
 
-
-
 </script>
+
+
+
 </html>
 @stop

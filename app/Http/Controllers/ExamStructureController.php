@@ -328,7 +328,7 @@ class ExamStructureController extends Controller
                 return '<form method="post" class="delete_form" action="' . action('ExamStructureController@destroy', $examinations->id) . '">
        ' . csrf_field() . '
            <input type="hidden" name="_method" value="DELETE"/>
-           <button typze="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+           <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
        </form>';
             })
             ->editColumn('status', function ($examinations) {
