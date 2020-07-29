@@ -46,9 +46,7 @@ class ExportReports implements FromCollection, WithMapping, WithHeadings
             $scoreby[$i] = UserExamScoreByCat::all()->where('userexamset_id', $a->id);
 
             $i = $i + 1;
-
         }
-        // error_log($i);
         $this->p = 0;
         $this->m = 0;
         $this->sb = $scoreby;
@@ -64,41 +62,30 @@ class ExportReports implements FromCollection, WithMapping, WithHeadings
 
         $str = Structure::find($exams->str_id);
         $str_set = DB::table('structure_sets')->where('set_id', $exams->str_id)->get();
-        // error_log(count($str_set));
+
         $x = count($scoreby[0]) + 4;
-        $z = count($scoreby[0]);
-        $countUser = count($scoreby);
-        //error_log($countUser);
+        $z = count($scoreby[0]) - 1;
         error_log($z);
         $m = 0;
         $q;
         $p = $this->p;
-        for ($j = 0; $j <= $z; $j++) {
-            // error_log($j);
-            if ($j < $countUser) {
-                error_log($j);
-                error_log("555");
-                foreach ($scoreby[$j] as $ag) {
+        for ($j = 0; $j < $z; $j++) {
+            foreach ($scoreby[$j] as $ag) {
 
-                    foreach ($str_set as $srt) {
-                        if ($srt->cate_id == $ag->cate_id) {
-                            $q = (($srt->easy + $srt->medium + $srt->hard) * 100) / $str->count;
-                        }
+                foreach ($str_set as $srt) {
+                    if ($srt->cate_id == $ag->cate_id) {
+                        $q = (($srt->easy + $srt->medium + $srt->hard) * 100) / $str->count;
                     }
-                    // error_log($ag->score);
-                    $num[$m] = ($ag->score * $q) / 100;
-                    $m = $m + 1;
-
                 }
-
-                $m = 0;
-                $getCate[$j] = $num;
+                // error_log($ag->score);
+                $num[$m] = ($ag->score * $q) / 100;
+                $m = $m + 1;
             }
+
+            $m = 0;
+            $sum[$j] = $num;
+
         }
-        // error_log("____");
-        error_log(count($getCate[0]));
-        $CountgetCate = count($getCate);
-        error_log(count($getCate));
 
         for ($i = 0; $i < $x; $i++) {
 
@@ -115,20 +102,12 @@ class ExportReports implements FromCollection, WithMapping, WithHeadings
                 $r[$i] = $exam->status;
 
             } else {
-                if ($p < $CountgetCate) {
-                    // error_log($p);
-                    // error_log(',');
-                    // error_log($m);
-                    // error_log("____");
-                    $r[$i] = "" . $getCate[$p][$m];
-
-                    $m = $m + 1;
-                }
+                $r[$i] = "" . $sum[$p][$m];
+                $m = $m + 1;
             }
         }
-        if ($p < $CountgetCate) {
-            $this->p = $p + 1;
-        }
+        $this->p = $p + 1;
+
         return $r;
 
     }

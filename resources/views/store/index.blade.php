@@ -45,13 +45,24 @@
                 <p>{{ \Session::get('success') }}</p>
             </div>
         @endif
+        <select   name="categories" required id="cate1" >
+                    <option  value="0">----------กรุณาเลือกหมวดหมู่----------</option>
+                    @foreach($list as $row)
+
+                    @if($row['status']==1)
+                    <option  value="{{$row['id']}}">{{$row['topic']}}</option>
+                    @endif
+
+                    @endforeach
+
+                </select>
+
 
         <table class="table table-bordered table-striped" id="table">
             <thead>
                 <tr>
                     <th>หมวดหมู่</th>
                     <th>ระดับ</th>
-                    <th>สถานะ</th>
                     <th>ถูกนำไปสอบ</th>
                     <th>ทำถูก</th>
                     <th>ทำผิด</th>
@@ -120,6 +131,13 @@
 
 <footer></footer>
 <script>
+
+$('#cate1').change(function() {
+
+
+
+});
+
     $(function () {
         $('#table').DataTable({
             processing: true,
@@ -133,10 +151,7 @@
                     data: 'degree',
                     name: 'degree'
                 },
-                {
-                    data: 'status',
-                    name: 'status'
-                },
+
 
                 {
                     data: 'count',

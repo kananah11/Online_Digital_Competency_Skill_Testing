@@ -285,10 +285,10 @@ echo "<script type='text/javascript'> window.alert('$mas');</script>"; ?>
             </div>
             <form action="{{url('/')}}" method="POST" class="-form" autocomplete="off">
             {{csrf_field()}}
-            <img src="/images/pictures/kmutnb_Logo.png" style="width:120px;">
+            <img src="/images/pictures/555.png" style="width:120px;">
                 <h6  class="header-text">Sign in to take the exam.</h6>
                 <div style="text-align:center;margin-bottom:10px;">
-                <a class="" href="https://account.kmutnb.ac.th" target="_blank"><img src="http://account.kmutnb.ac.th/web/images/icit_account_logo.png" alt="ICIT Account" style="width:120px;"></a>
+                <a class="" href="https://account.kmutnb.ac.th" target="_blank"><img src="http://account.kmutnb.ac.th/web/images/icit_account_logo.png" alt="ICIT Account" style="width:100px;"></a>
                 </div>
                 <div class="block-input">
                     <input

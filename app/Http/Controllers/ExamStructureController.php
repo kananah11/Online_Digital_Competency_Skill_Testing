@@ -47,8 +47,24 @@ class ExamStructureController extends Controller
      */
     public function store(Request $request)
     {
+
         $exam = $request->get('get');
+
         $status = 1;
+        for ($r = 1; $r <= $exam; $r++) {
+            $checkCate[] = $request->get('categories' . $r);
+        }
+        $countCate = count($checkCate);
+        for ($x = 0; $x < $countCate - 1; $x++) {
+            for ($z = $x + 1; $z < $countCate; $z++) {
+                if ($checkCate[$x] == $checkCate[$z]) {
+                    return redirect()->route('structure.create')->with('error', 'มีการเลือกหมวดหมู่ซ้ำ กรุณาเลือกใหม่');
+                }
+
+            }
+
+        }
+
         $sum = 0;
         $this->validate(
             $request,
@@ -59,6 +75,7 @@ class ExamStructureController extends Controller
 
             ]
         );
+
         $time = new Structure(
             [
                 'struc_name' => $request->get('struc_name'),
@@ -126,6 +143,7 @@ class ExamStructureController extends Controller
         }
 
         return redirect()->route('structure.create')->with('error', 'error system');
+
     }
 
     /**
@@ -171,6 +189,20 @@ class ExamStructureController extends Controller
     {
         $exam = $request->get('get'); //เก็บค่านับช่งอ
         $status = 1; // เก็บค่า status
+
+        for ($r = 1; $r <= $exam; $r++) {
+            $checkCate[] = $request->get('categories' . $r);
+        }
+        $countCate = count($checkCate);
+        for ($x = 0; $x < $countCate - 1; $x++) {
+            for ($z = $x + 1; $z < $countCate; $z++) {
+                if ($checkCate[$x] == $checkCate[$z]) {
+                    return redirect()->route('structure.create')->with('error', 'มีการเลือกหมวดหมู่ซ้ำ กรุณาเลือกใหม่');
+                }
+
+            }
+
+        }
         $sum = 0; //เก็บผลรวมข้อ
         $chuds = DB::table('structure_sets')->where('set_id', $id)->get(); // เก็บข้อมูลจากดาต้าเบส ที่ มีชุดไอดีเดียวกัน
         $x = 0; //9ัวนับว่าวนเก็บค่าไปกี่ครั้งแล้ว

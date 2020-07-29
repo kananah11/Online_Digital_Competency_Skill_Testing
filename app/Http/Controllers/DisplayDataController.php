@@ -32,6 +32,10 @@ class DisplayDataController extends Controller
            </form>';
             })
 
+            ->editColumn('questuion', function ($examinations) {
+
+                return '';
+            })
             ->editColumn('updated_at', function ($user) {
                 return $user->updated_at->format('d/m/Y');
             })

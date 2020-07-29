@@ -5,6 +5,31 @@
 @section('content')
 <div class="container">
 <br>
+
+@if(count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        @if(\Session::has('error'))
+        <div class="alert alert-danger">
+            <p>{{ \Session::get('error') }}</p>
+        </div>
+        @endif
+
+        @if(\Session::has('success'))
+        <div class="alert alert-success">
+            <p>{{ \Session::get('success') }}</p>
+        </div>
+        @endif
+
+
+
 <div class="card">
   <h5  class="card-header" align="center">
    แก้ไขชุดข้อสอบ
@@ -13,10 +38,10 @@
   <form method="post" action="{{action('ExamSetController@update',$id)}}">
     {{csrf_field()}}
     <label class="control-label">รหัสชุดข้อสอบ</label>
-    <input class="form-control" type="text" id="asd" name='id_set' value="{{$examset->id}}" size="30" ><br>
+    <input class="form-control" type="text" id="asd" name='id_set' value="{{$examset->id}}" size="30" required><br>
 
     <label class="control-label">โครงสร้างข้อสอบ</label>
-    <select  class="form-control" style="height: 100%;" name="str_id">
+    <select  class="form-control" style="height: 100%;" name="str_id" required>
         <option value="{{$examset->str_id}}">{{$examset->Structure->struc_name}}</option>
         @foreach($list as $row)
 
@@ -28,7 +53,7 @@
     </select><br>
 
     <label class="control-label">คะแนนที่สอบผ่าน(%)</label>
-    <input class="form-control" type="text" id="a" name='pass' value="{{$examset->pass}}" size="30" ><br>
+    <input class="form-control" type="text" id="a" name='pass' value="{{$examset->pass}}" size="30" required ><br>
     <div class="form-group">
     <label class="control-label" align="right">รายละเอียด</label><br>
 

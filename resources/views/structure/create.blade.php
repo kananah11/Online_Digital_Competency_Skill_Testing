@@ -4,12 +4,24 @@
 <head>
     <script type="text/javascript" >
         var i = 1;
+       <?php
+
+$p;
+foreach ($list as $rows) {
+
+    $p[] = $rows['topic'];
+
+}
+
+?>
+
         <?php $rp = 1; ?>
 
         $(function() {
   $("#addMore").click(function(e) {
     e.preventDefault();
     i=i+1;
+
     <?php $rp = $rp + 1; ?>
     $("#createTextbox").append("<div class=" +
                     '"col-md-12" id="box' + i + '"' +
@@ -21,9 +33,9 @@
                     '@if($row["status"]==1)' +
                     '<option value="{{$row["id"]}}">' +
                     '{{$row["topic"]}}</option> @endif <br>@endforeach</select><br><label for="name">กรุณาเลือกระดับ</label><br>' +
-                    '<br>ง่าย : <input type=' + '"text"' + 'name=' + '"easy' + i + '"value="0" "' + '"required "' + '"' +
-                    '> ปานกลาง : <input type=' + '"text"' + 'name=' + '"medium' + i + '"value="0" "' + '"required "' + '"' +
-                    '> ยาก : <input type=' + '"text"' + 'name=' + '"hard' + i + '"value="0" "' + '"required "' + '"' +
+                    '<br>ง่าย : <input type=' + '"number"' +'min="0"' +'step="1"'+ 'name=' + '"easy' + i + '"value="0" "' + '"required "' + '"' +
+                    '> ปานกลาง : <input type=' + '"number"' +'min="0"' +'step="1"'+ 'name=' + '"medium' + i + '"value="0" "' + '"required "' + '"' +
+                    '> ยาก : <input type=' + '"number"' +'min="0"' +'step="1"' + 'name=' + '"hard' + i + '"value="0" "' + '"required "' + '"' +
                     '>   <br><br><br></div> ');
                     document.getElementById("get").value = i;
   });
@@ -86,7 +98,7 @@
             {{csrf_field()}}
             <div align="right" >
 
-                <button class="btn btn-primary" id="addMore">เพิ่มข้อมูล</button>
+                <button class="btn btn-primary" id="addMore">เพิ่มข้อมูล</button>{{$p[0]}}
                 <!-- <input type="button" class="btn btn-primary" value="เพิ่มข้อมูล"id="addMore" > -->
                 <!-- <div id="createTextbox"></div> -->
 
@@ -110,9 +122,9 @@
                 <br>
                 <label for="name" >กรุณาเลือกระดับ</label><br><br>
 
-                ง่าย : <input type="text" id="easy1" name="easy1" value="0" required>
-                ปานกลาง : <input type="text" id="medium1" name="medium1" value="0" required>
-                ยาก : <input type="text" id="้hard1" name="hard1" value="0" required>   <br><br><br>
+                ง่าย : <input type="number" min="0" step="1" id="easy1" name="easy1" value="0" required>
+                ปานกลาง : <input type="number" min="0" step="1" id="medium1" name="medium1" value="0" required>
+                ยาก : <input type="number" min="0" step="1" id="้hard1" name="hard1" value="0" required>   <br><br><br>
 
 
             </div>
@@ -123,7 +135,7 @@
             <br>
 
             <div align="center" class="form-group has-warning" > <br> <br> <br> <br> <br> <br>
-                กำหนดระยะเวลาในการสอบ <input type="text" class="text-center" name="inputtime" id="inputtime" required> นาที
+                กำหนดระยะเวลาในการสอบ <input type="number" min="0" step="1" class="text-center" name="inputtime" id="inputtime" required> นาที
             </div>
 
             <input type="text" id="get" name='get' value="1" hidden/>
@@ -147,16 +159,15 @@
 <script>
 
 
-// $('#cate1').change(function() {
+$('#cate1').change(function() {
 
-//
-// // alert(i);
-// location.reload();
-// // $(this).val()
-//     // if ($(this).val() === '1') {
 
-//     // }
-// });
+ alert($(this).val());
+
+    // if ($(this).val() === '1') {
+
+    // }
+});
 
 
 

@@ -20,6 +20,7 @@
                <thead>
                   <tr>
                      <th>หมวดหมู่</th>
+                     <th>คำถาม</th>
                      <th>ระดับ</th>
                      <th>สถานะ</th>
                      <th>อัพเดท</th>
@@ -44,6 +45,7 @@
                ajax: '{{ url('data') }}',
                columns: [
                         { data: 'name_cate', name: 'name_cate' },
+                        { data: 'questuion', name: 'questuion' },
                         { data: 'degree', name: 'degree' },
                         { data: 'status', name: 'status' },
                         { data: 'updated_at', name: 'updated_at' },

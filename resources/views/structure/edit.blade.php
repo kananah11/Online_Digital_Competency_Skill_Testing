@@ -3,7 +3,11 @@
 @section('content')
 
 <script type="text/javascript" >
+
+
              <?php
+$cars = array("Volvo", "BMW", "Toyota");
+
 $result = 0;
 foreach ($chuds as $count) {
     $result++;
@@ -82,7 +86,7 @@ echo "var i =" . $result . ";"
 
         <div align="right" >
 
-                    <button class="btn btn-primary" id="addMore">เพิ่มข้อมูล</button>
+                    <button class="btn btn-primary" id="addMore">เพิ่มข้อมูล</button>{{$cars[0]}}
                     <!-- <div id="createTextbox"></div> -->
                 </div>
                 <div id="createTextbox">
@@ -91,7 +95,10 @@ echo "var i =" . $result . ";"
                <div class="col-md-12"  style="background-color:#FFEFD5; border: 2px solid orange;" id="box{{$x}}" >
                     <br>
                     <input type="button"   class="close" name="delete" id="delete"  value="x" onClick="hide()">
-                    <select  name="categories{{$x}}" required>
+
+
+                    <select  name="categories{{$x}}" required >
+
                         @foreach($list as $rows)
 
                          @if($rows['id']==$data->cate_id)
@@ -99,10 +106,10 @@ echo "var i =" . $result . ";"
                         @endif
                         @endforeach
 
-
                         @foreach($list as $row)
+                        @if($row['id']==$data->cate_id)
 
-                        @if($row['status']==1)
+                        @else
                         <option value="{{$row['id']}}">{{$row['topic']}}</option>
                         @endif
 
