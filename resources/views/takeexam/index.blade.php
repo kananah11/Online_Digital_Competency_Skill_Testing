@@ -125,7 +125,7 @@ echo "<script type='text/javascript'> window.alert('$mas');</script>"; ?>
             <form   method="post"  action="{{url('takeexam/run')}}" >
       {{csrf_field()}}
       <div class="search-box">
-<input type="search" name="test" placeholder="กรอกรหัสชุดข้อสอบ...">
+<input type="search" name="test" placeholder="กรอกรหัสชุดข้อสอบ...s">
 <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
 </div>
 <!-- <div class="float-center">
