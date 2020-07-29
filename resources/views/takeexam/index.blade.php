@@ -131,7 +131,7 @@ echo "<script type='text/javascript'> window.alert('$mas');</script>"; ?>
 <!-- <div class="float-center">
     <div class="search input-group col-12 m-0 p-0 " align="center" >
 
-        <input autofocus id="searchInput" name="test" type="text" placeholder="ป้อนรหัสชุดข้อสอบ...">
+        <input autofocus id="searchInput" name="test" type="text" placeholder="ป้อนรหัสชุดข้อสอบ....">
         <div class="input-group-append">
         <button type="submit" class=" btn btn-outline-secondary"><i class="fa fa-search"></i></button>
      </div>
